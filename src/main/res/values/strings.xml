@@ -873,4 +873,8 @@
     <string name="copy_internal_link">Copy internal link</string>
     <string name="copy_internal_link_subline">Only works for users with access to this folder</string>
     <string name="failed_to_download">Failed to pass file to download manager</string>
+
+    <string name="etm_title" translatable="false">Engineering &amp; Test Module</string>
+    <string name="etm_preferences" translatable="false">Preferences</string>
+    <string name="etm_share" translatable="false">Share</string>
 </resources>

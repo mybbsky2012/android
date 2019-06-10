@@ -133,7 +133,7 @@ android {
 
         buildTypes {
             debug {
-                testCoverageEnabled (project.hasProperty('coverage'))
+                testCoverageEnabled(project.hasProperty('coverage'))
             }
         }
 
@@ -256,6 +256,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation 'com.github.albfernandez:juniversalchardet:2.0.3' // need this version for Android <7
     implementation 'com.google.code.findbugs:annotations:2.0.1'
     implementation 'commons-io:commons-io:2.6'
@@ -364,7 +365,7 @@ tasks.register("combinedTestReport", JacocoReport) {
     sourceDirectories = files([mainSrc])
     classDirectories = files([debugTree])
     executionData = fileTree(dir: project.buildDir, includes: [
-        'jacoco/testGplayDebugUnitTest.exec', 'outputs/code-coverage/connected/flavors/GPLAY/*coverage.ec'
+            'jacoco/testGplayDebugUnitTest.exec', 'outputs/code-coverage/connected/flavors/GPLAY/*coverage.ec'
     ])
 }
 

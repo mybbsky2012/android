@@ -95,6 +95,10 @@
 		<Preference android:id="@+id/changelog_link"
 					android:title="Changelog dev version"
 					android:key="changelog_link" />
+
+        <Preference android:id="@+id/etm"
+                    android:title="@string/etm_title"
+                    android:key="etm" />
 	</PreferenceCategory>
 
 </PreferenceScreen>

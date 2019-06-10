@@ -1,0 +1,64 @@
+package com.nextcloud.client.etm
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.MenuItem
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.nextcloud.client.di.Injectable
+import com.nextcloud.client.di.ViewModelFactory
+import com.owncloud.android.R
+import com.owncloud.android.ui.activity.ToolbarActivity
+import javax.inject.Inject
+
+class EtmActivity : ToolbarActivity(), Injectable {
+
+    companion object {
+        @JvmStatic
+        fun launch(context: Context) {
+            val etmIntent = Intent(context, EtmActivity::class.java)
+            context.startActivity(etmIntent)
+        }
+    }
+
+    @Inject lateinit var viewModelFactory: ViewModelFactory
+    internal lateinit var vm: EtmViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_etm)
+        updateActionBarTitleAndHomeButtonByString("Engineering & Test Module")
+        vm = ViewModelProvider(this, viewModelFactory).get(EtmViewModel::class.java)
+        vm.currentPage.observe(this, Observer {
+            onPageChanged(it)
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId) {
+            android.R.id.home -> {
+                if (!vm.onBackPressed()) {
+                    finish()
+                };
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun onPageChanged(page: EtmMenuEntry?) {
+        if (page != null) {
+            val fragment = page.pageClass.java.getConstructor().newInstance()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.etm_root, fragment)
+                .commit()
+            updateActionBarTitleAndHomeButtonByString("ETM - ${getString(page.titleRes)}")
+        } else {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.etm_root, EtmMenuFragment())
+                .commitNow()
+            updateActionBarTitleAndHomeButtonByString(getString(R.string.etm_title))
+        }
+    }
+}
